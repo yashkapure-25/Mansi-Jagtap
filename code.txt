@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mansi Jagtap | Official Portfolio</title>
+    <meta
+      name="description"
+      content="Official portfolio of young aspiring model Mansi Jagtap. View photoshoots, projects, and professional enquiry details."
+    />
+    <meta
+      name="keywords"
+      content="Mansi Jagtap, model portfolio, aspiring model, fashion portfolio, photoshoots, projects, bookings"
+    />
+    <meta name="author" content="Mansi Jagtap" />
+
+    <!-- Open Graph for richer sharing -->
+    <meta property="og:title" content="Mansi Jagtap | Official Portfolio" />
+    <meta
+      property="og:description"
+      content="Elegant, minimal and age-appropriate portfolio for young aspiring model Mansi Jagtap."
+    />
+    <meta property="og:type" content="website" />
+
+    <!-- Basic JSON-LD structured data for SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mansi Jagtap",
+        "jobTitle": "Aspiring Model",
+        "url": "https://example.com",
+        "sameAs": [
+          "https://www.instagram.com/your-handle",
+          "https://www.facebook.com/your-page"
+        ]
+      }
+    </script>
+
+    <meta name="theme-color" content="#fbf4ef" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- React via CDN + Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+
+      const galleryItems = [
+        {
+          id: 1,
+          category: "studio",
+          src: "assets/gallery-studio-1.jpg",
+          alt: "Studio shoot: clean portrait lighting and modest styling",
+          label: "Studio Shoot",
+        },
+        {
+          id: 2,
+          category: "outdoor",
+          src: "assets/gallery-outdoor-1.jpg",
+          alt: "Outdoor shoot: soft natural light and neutral styling",
+          label: "Outdoor Shoot",
+        },
+        {
+          id: 3,
+          category: "fashion",
+          src: "assets/gallery-fashion-1.jpg",
+          alt: "Fashion portfolio: elegant outfit and refined posing",
+          label: "Fashion Portfolio",
+        },
+        {
+          id: 4,
+          category: "commercial",
+          src: "assets/gallery-commercial-1.jpg",
+          alt: "Commercial style: friendly expression and everyday polished look",
+          label: "Commercial Style",
+        },
+        {
+          id: 5,
+          category: "studio",
+          src: "assets/gallery-studio-2.jpg",
+          alt: "Studio shoot: classic portrait with soft tones",
+          label: "Studio Shoot",
+        },
+        {
+          id: 6,
+          category: "fashion",
+          src: "assets/gallery-fashion-2.jpg",
+          alt: "Fashion portfolio: minimal outfit styling for a clean silhouette",
+          label: "Fashion Portfolio",
+        },
+        {
+          id: 7,
+          category: "outdoor",
+          src: "assets/gallery-outdoor-2.jpg",
+          alt: "Outdoor shoot: pastel background and natural styling",
+          label: "Outdoor Shoot",
+        },
+        {
+          id: 8,
+          category: "commercial",
+          src: "assets/gallery-commercial-2.jpg",
+          alt: "Commercial style: bright, approachable look for brand imagery",
+          label: "Commercial Style",
+        },
+      ];
+
+      function Header({ navOpen, onToggleNav, headerSolid, headerVisible }) {
+        return (
+          <header
+            className={
+              "site-header" +
+              (headerVisible ? " is-visible" : "") +
+              (headerSolid ? " is-solid" : "")
+            }
+            data-header=""
+          >
+            <div className="header-inner">
+              <a className="logo" href="#home" aria-label="Go to Home">
+                Mansi Jagtap
+              </a>
+              <nav
+                className={"main-nav" + (navOpen ? " open" : "")}
+                aria-label="Primary navigation"
+              >
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#photoshoots">Photoshoots</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+              </nav>
+              <button
+                className="nav-toggle"
+                aria-label="Toggle navigation"
+                aria-expanded={navOpen}
+                onClick={onToggleNav}
+              >
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </header>
+        );
+      }
+
+      function Hero({ showPhoto }) {
+        return (
+          <section id="home" className="hero" aria-label="Hero introduction">
+            <div className="hero-bg" aria-hidden="true"></div>
+            <div className="hero-center">
+              <div className="hero-name" data-hero-name="">
+                <h1 className="hero-title">Mansi Jagtap</h1>
+                <p className="hero-subtitle">Official Portfolio</p>
+              </div>
+              <div
+                className="hero-photo"
+                data-hero-photo=""
+                aria-hidden="false"
+                style={{
+                  opacity: showPhoto ? 1 : 0,
+                  transform: showPhoto ? "translateY(0)" : "translateY(26px)",
+                }}
+              >
+                <img
+                  src="assets/hero-mansi.png"
+                  alt="Professional, age-appropriate portrait of Mansi Jagtap"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+            <div className="scroll-cue" aria-hidden="true">
+              <span>Scroll</span>
+              <div className="scroll-line"></div>
+            </div>
+          </section>
+        );
+      }
+
+      function AboutSection() {
+        return (
+          <section id="about" className="section">
+            <div className="section-heading">
+              <h2>About</h2>
+              <p>
+                A wholesome, polished introduction suitable for the fashion and modeling industry.
+              </p>
+            </div>
+            <div className="about-wrap reveal">
+              <div className="about-portrait">
+                <img
+                  src="assets/about-portrait.jpg"
+                  alt="Modest professional portrait of Mansi Jagtap"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="about-copy">
+                <h3 className="about-name">Mansi Jagtap</h3>
+                <p>
+                  Mansi Jagtap is a young aspiring model who is passionate about fashion, creativity,
+                  and the art of storytelling through images. She approaches every shoot with
+                  confidence, focus, and a positive, professional attitude.
+                </p>
+                <p>
+                  With a strong interest in learning and growing in the industry, Mansi is excited to
+                  collaborate with photographers, stylists, brands, and creative teams. She values
+                  respectful, well‑planned work environments and strives to bring warmth,
+                  reliability, and consistent effort to every project.
+                </p>
+                <div className="about-highlights">
+                  <span className="chip">Fashion Portfolio</span>
+                  <span className="chip">Photoshoots</span>
+                  <span className="chip">Workshops &amp; Training</span>
+                  <span className="chip">Brand Collaborations</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      function PhotoshootsSection({ activeFilter, onFilterChange, onOpenLightbox }) {
+        const filters = [
+          { id: "all", label: "All" },
+          { id: "studio", label: "Studio Shoots" },
+          { id: "outdoor", label: "Outdoor Shoots" },
+          { id: "fashion", label: "Fashion Portfolio" },
+          { id: "commercial", label: "Commercial Style" },
+        ];
+
+        const filteredItems =
+          activeFilter === "all"
+            ? galleryItems
+            : galleryItems.filter((item) => item.category === activeFilter);
+
+        return (
+          <section id="photoshoots" className="section">
+            <div className="section-heading">
+              <h2>Photoshoots</h2>
+              <p>Stylish, modest, and age‑appropriate photography — curated by category.</p>
+            </div>
+            <div className="filter-row" role="tablist" aria-label="Photoshoot categories">
+              {filters.map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  className={"filter-btn" + (activeFilter === f.id ? " active" : "")}
+                  data-filter={f.id}
+                  role="tab"
+                  aria-selected={activeFilter === f.id}
+                  onClick={() => onFilterChange(f.id)}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+            <div className="grid gallery-grid" aria-label="Photoshoot gallery">
+              {filteredItems.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="gallery-item reveal"
+                  data-category={item.category}
+                  onClick={() => onOpenLightbox(item)}
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="gallery-caption">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      function ProjectsSection() {
+        return (
+          <section id="projects" className="section">
+            <div className="section-heading">
+              <h2>Projects</h2>
+              <p>
+                Professional highlights and learning experiences (placeholders can be replaced
+                anytime).
+              </p>
+            </div>
+            <div className="grid projects-modern">
+              <article className="project reveal">
+                <div className="project-media">
+                  <img
+                    src="assets/project-brand-collab.jpg"
+                    alt="Project cover: brand collaboration placeholder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="project-body">
+                  <h3>Brand Collaboration (Placeholder)</h3>
+                  <p>
+                    A polished collaboration concept for a youth‑friendly fashion or lifestyle brand,
+                    featuring minimal styling and clean visuals.
+                  </p>
+                </div>
+              </article>
+
+              <article className="project reveal">
+                <div className="project-media">
+                  <img
+                    src="assets/project-fashion-shoot.jpg"
+                    alt="Project cover: fashion shoot placeholder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="project-body">
+                  <h3>Fashion Shoot</h3>
+                  <p>
+                    Editorial‑style portraits with modest outfits, soft light, and a refined,
+                    high‑end aesthetic suited for a professional portfolio.
+                  </p>
+                </div>
+              </article>
+
+              <article className="project reveal">
+                <div className="project-media">
+                  <img
+                    src="assets/project-training.jpg"
+                    alt="Project cover: workshops and training placeholder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="project-body">
+                  <h3>Workshops / Modeling Training</h3>
+                  <p>
+                    Ongoing learning through workshops focused on posing, runway basics, camera
+                    presence, and industry professionalism.
+                  </p>
+                </div>
+              </article>
+
+              <article className="project reveal">
+                <div className="project-media">
+                  <img
+                    src="assets/project-event.jpg"
+                    alt="Project cover: fashion event placeholder"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="project-body">
+                  <h3>Fashion Events / Campaigns</h3>
+                  <p>
+                    Participation in youth‑appropriate events and campaigns that highlight confidence,
+                    teamwork, and a respectful on‑set environment.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </section>
+        );
+      }
+
+      function ContactSection() {
+        return (
+          <section id="contact" className="section">
+            <div className="section-heading">
+              <h2>Contact</h2>
+              <p>For professional inquiries, bookings, and collaborations only.</p>
+            </div>
+            <div className="contact-wrap">
+              <form
+                id="contact-form"
+                className="contact-form reveal"
+                action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+                method="POST"
+              >
+                <div className="field">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    autoComplete="name"
+                    required
+                  />
+                </div>
+                <div className="field two-col">
+                  <div>
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      autoComplete="email"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone">Phone (optional)</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      autoComplete="tel"
+                      inputMode="tel"
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <label htmlFor="subject">Subject</label>
+                  <select id="subject" name="subject" required>
+                    <option value="">Select a subject</option>
+                    <option value="Booking">Booking</option>
+                    <option value="Collaboration">Collaboration</option>
+                    <option value="Inquiry">Inquiry</option>
+                  </select>
+                </div>
+                <div className="field">
+                  <label htmlFor="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder="Please include dates, location, and a brief project description."
+                    required
+                  ></textarea>
+                </div>
+                <input
+                  type="hidden"
+                  name="_subject"
+                  value="New enquiry from Mansi Jagtap portfolio"
+                />
+                <button type="submit" className="btn">
+                  Send Message
+                </button>
+                <p className="form-note">
+                  For professional inquiries, bookings, and collaborations only.
+                </p>
+                <p className="form-status" aria-live="polite" aria-atomic="true"></p>
+              </form>
+
+              <aside className="contact-card reveal" aria-label="Contact details">
+                <h3>Professional Contact</h3>
+                <p>
+                  Email:{" "}
+                  <a href="mailto:contact@mansijagtap.com">
+                    contact@mansijagtap.com
+                  </a>
+                </p>
+                <p>
+                  Instagram:{" "}
+                  <a
+                    href="https://www.instagram.com/your-handle"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    @your-handle
+                  </a>
+                </p>
+                <p className="small">
+                  Managed by Guardian/Agency for professionalism and safety.
+                </p>
+              </aside>
+            </div>
+          </section>
+        );
+      }
+
+      function Lightbox({ isOpen, item, onClose }) {
+        if (!isOpen || !item) return null;
+        return (
+          <div className="lightbox is-open" data-lightbox="" aria-hidden="false">
+            <div
+              className="lightbox-backdrop"
+              data-lightbox-close=""
+              onClick={onClose}
+            ></div>
+            <div
+              className="lightbox-dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Expanded photo view"
+            >
+              <button
+                className="lightbox-close"
+                type="button"
+                aria-label="Close"
+                data-lightbox-close=""
+                onClick={onClose}
+              >
+                ✕
+              </button>
+              <img
+                className="lightbox-img"
+                data-lightbox-img=""
+                src={item.src}
+                alt={item.alt}
+              />
+              <p className="lightbox-caption" data-lightbox-caption="">
+                {item.label}
+              </p>
+            </div>
+          </div>
+        );
+      }
+
+      function Footer() {
+        const year = new Date().getFullYear();
+        return (
+          <footer className="site-footer">
+            <div className="footer-inner">
+              <div>
+                <p className="footer-name">Mansi Jagtap</p>
+                <p className="footer-note">Managed by Guardian/Agency</p>
+              </div>
+
+              <div className="footer-links" aria-label="Social links">
+                <a
+                  className="icon-link"
+                  href="https://www.instagram.com/your-handle"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5Zm4.25 4.25a4.25 4.25 0 1 1 0 8.5 4.25 4.25 0 0 1 0-8.5Zm0 1.5a2.75 2.75 0 1 0 0 5.5 2.75 2.75 0 0 0 0-5.5Zm5.3-2.05a.95.95 0 1 1 0 1.9.95.95 0 0 1 0-1.9Z" />
+                  </svg>
+                </a>
+                <a
+                  className="icon-link"
+                  href="mailto:contact@mansijagtap.com"
+                  aria-label="Email"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 6.75A2.75 2.75 0 0 1 6.75 4h10.5A2.75 2.75 0 0 1 20 6.75v10.5A2.75 2.75 0 0 1 17.25 20H6.75A2.75 2.75 0 0 1 4 17.25V6.75Zm2.75-1.25c-.69 0-1.25.56-1.25 1.25v.34l7.07 4.24a1.5 1.5 0 0 0 1.54 0L18.5 7.1v-.35c0-.69-.56-1.25-1.25-1.25H6.75Zm11.75 3.3-3.62 2.17a3 3 0 0 1-3.07 0L5.5 8.8v8.45c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25V8.8Z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <p className="copyright">
+              © <span>{year}</span> Mansi Jagtap. All rights reserved.
+            </p>
+          </footer>
+        );
+      }
+
+      function App() {
+        const [navOpen, setNavOpen] = useState(false);
+        const [headerSolid, setHeaderSolid] = useState(false);
+        const [headerVisible, setHeaderVisible] = useState(false);
+        const [showHeroPhoto, setShowHeroPhoto] = useState(false);
+        const [activeFilter, setActiveFilter] = useState("all");
+        const [lightboxItem, setLightboxItem] = useState(null);
+
+        useEffect(() => {
+          const handleScroll = () => {
+            const y = window.scrollY || window.pageYOffset;
+            setHeaderVisible(y > 20);
+            setHeaderSolid(y > 120);
+            setShowHeroPhoto(y > 30);
+          };
+          handleScroll();
+          window.addEventListener("scroll", handleScroll, { passive: true });
+          return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+
+        useEffect(() => {
+          const elements = document.querySelectorAll(".reveal");
+          if (!("IntersectionObserver" in window) || !elements.length) {
+            elements.forEach((el) => el.classList.add("visible"));
+            return;
+          }
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("visible");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.2 }
+          );
+          elements.forEach((el) => observer.observe(el));
+          return () => observer.disconnect();
+        }, []);
+
+        useEffect(() => {
+          document.body.style.overflow = navOpen ? "hidden" : "";
+        }, [navOpen]);
+
+        const openLightbox = (item) => setLightboxItem(item);
+        const closeLightbox = () => setLightboxItem(null);
+
+        return (
+          <>
+            <Header
+              navOpen={navOpen}
+              onToggleNav={() => setNavOpen((open) => !open)}
+              headerSolid={headerSolid}
+              headerVisible={headerVisible}
+            />
+            <main>
+              <Hero showPhoto={showHeroPhoto} />
+              <AboutSection />
+              <PhotoshootsSection
+                activeFilter={activeFilter}
+                onFilterChange={setActiveFilter}
+                onOpenLightbox={openLightbox}
+              />
+              <ProjectsSection />
+              <ContactSection />
+            </main>
+            <Lightbox
+              isOpen={!!lightboxItem}
+              item={lightboxItem}
+              onClose={closeLightbox}
+            />
+            <Footer />
+          </>
+        );
+      }
+
+      const rootEl = document.getElementById("root");
+      const root = ReactDOM.createRoot(rootEl);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
+
+// Mobile navigation toggle
+const navToggle = document.querySelector(".nav-toggle");
+const mainNav = document.querySelector(".main-nav");
+
+if (navToggle && mainNav) {
+  navToggle.addEventListener("click", () => {
+    mainNav.classList.toggle("open");
+  });
+
+  mainNav.addEventListener("click", (e) => {
+    if (e.target.tagName === "A") {
+      mainNav.classList.remove("open");
+    }
+  });
+}
+
+// Scroll reveal animations using IntersectionObserver
+const revealElements = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window && revealElements.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+    }
+  );
+
+  revealElements.forEach((el) => observer.observe(el));
+} else {
+  // Fallback: just show everything
+  revealElements.forEach((el) => el.classList.add("visible"));
+}
+
+// Contact form -> mailto email
+const contactForm = document.getElementById("contact-form");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = contactForm.name.value.trim();
+    const email = contactForm.email.value.trim();
+    const company = contactForm.company.value.trim();
+    const subject = contactForm.subject.value;
+    const message = contactForm.message.value.trim();
+
+    const emailTo = "bookings@mansijagtap.com"; // Replace with your real bookings email
+
+    const subjectLine = `Booking Enquiry – ${subject || "Project"}`;
+
+    const bodyLines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      company ? `Company / Agency: ${company}` : "",
+      "",
+      "Project Details:",
+      message,
+      "",
+      "---",
+      "Sent via Mansi Jagtap – Portfolio Website",
+    ]
+      .filter(Boolean)
+      .join("%0D%0A");
+
+    const mailtoUrl = `mailto:${encodeURIComponent(emailTo)}?subject=${encodeURIComponent(
+      subjectLine
+    )}&body=${bodyLines}`;
+
+    window.location.href = mailtoUrl;
+  });
+}
+
+// Dynamic year in footer
+const yearSpan = document.getElementById("year");
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
+
+:root {
+  /* Soft luxury palette (cream / blush / beige / soft grey) */
+  --bg: #fbf4ef;
+  --bg-2: #f6efe9;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-2: rgba(255, 255, 255, 0.88);
+  --border: rgba(52, 45, 41, 0.12);
+  --shadow: 0 18px 55px rgba(52, 45, 41, 0.12);
+
+  --ink: #1c1715;
+  --muted: rgba(28, 23, 21, 0.62);
+  --muted-2: rgba(28, 23, 21, 0.46);
+
+  --accent: #d7a6a6; /* blush */
+  --accent-2: #c9c6f1; /* soft lavender */
+  --accent-3: #b7d6cc; /* soft mint */
+
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-pill: 999px;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 160ms var(--ease);
+  --t-med: 280ms var(--ease);
+  --t-slow: 520ms var(--ease);
+
+  --serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--sans);
+  background: radial-gradient(circle at top, #fff 0, var(--bg) 42%, var(--bg-2) 100%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+section {
+  scroll-margin-top: 84px;
+}
+
+/* Header / Navigation */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity var(--t-med), transform var(--t-med), background var(--t-med),
+    box-shadow var(--t-med), border-color var(--t-med);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.site-header.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.site-header.is-solid {
+  background: rgba(251, 244, 239, 0.72);
+  backdrop-filter: blur(16px);
+  border-bottom-color: var(--border);
+  box-shadow: 0 10px 40px rgba(52, 45, 41, 0.08);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 6vw 12px;
+}
+
+.logo {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.main-nav a {
+  position: relative;
+  color: var(--muted);
+  padding-bottom: 6px;
+}
+
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width var(--t-fast);
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+  color: var(--ink);
+}
+
+.main-nav a:hover::after,
+.main-nav a:focus-visible::after {
+  width: 100%;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+/* Generic layout */
+
+.section {
+  padding: 74px 6vw;
+}
+
+.section-heading {
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.section-heading h2 {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 2.4vw, 2.5rem);
+  margin-bottom: 10px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  gap: 26px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  font-size: 0.86rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--ink);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast),
+    border-color var(--t-fast);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+  background: var(--surface-2);
+  border-color: rgba(52, 45, 41, 0.18);
+}
+
+.btn.full-width {
+  width: 100%;
+}
+
+/* Hero (name first, photo later on scroll) */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px 6vw;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 25% 15%, rgba(215, 166, 166, 0.45), transparent 55%),
+    radial-gradient(circle at 80% 25%, rgba(201, 198, 241, 0.38), transparent 55%),
+    radial-gradient(circle at 55% 90%, rgba(183, 214, 204, 0.35), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(246, 239, 233, 0.9));
+}
+
+.hero-center {
+  position: relative;
+  z-index: 2;
+  width: min(980px, 100%);
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+}
+
+.hero-name {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: heroFadeIn 900ms var(--ease) forwards;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: clamp(2.4rem, 5.2vw, 4.1rem);
+  margin: 0;
+}
+
+.hero-subtitle {
+  margin: 10px 0 0;
+  font-size: 0.92rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.hero-photo {
+  width: min(520px, 86vw);
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity var(--t-slow), transform var(--t-slow);
+  will-change: opacity, transform;
+}
+
+.hero-photo img {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(52, 45, 41, 0.14);
+  box-shadow: var(--shadow);
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  color: var(--muted-2);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 34px;
+  background: rgba(52, 45, 41, 0.22);
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-line::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: rgba(52, 45, 41, 0.45);
+  animation: scrollLine 1.8s var(--ease) infinite;
+}
+
+@keyframes heroFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollLine {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(140%);
+  }
+}
+
+/* About */
+
+.about-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 34px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.about-portrait img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(52, 45, 41, 0.12);
+  box-shadow: 0 14px 40px rgba(52, 45, 41, 0.12);
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+}
+
+.about-name {
+  font-family: var(--serif);
+  margin: 0 0 10px;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+}
+
+.about-copy p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.about-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(52, 45, 41, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Photoshoot filters + gallery */
+
+.filter-row {
+  max-width: 980px;
+  margin: 0 auto 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.filter-btn {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: transform var(--t-fast), background var(--t-fast), box-shadow var(--t-fast),
+    border-color var(--t-fast), color var(--t-fast);
+}
+
+.filter-btn:hover {
+  transform: translateY(-1px);
+  background: var(--surface-2);
+  box-shadow: 0 12px 30px rgba(52, 45, 41, 0.1);
+}
+
+.filter-btn.active {
+  background: rgba(215, 166, 166, 0.22);
+  border-color: rgba(215, 166, 166, 0.35);
+  color: rgba(28, 23, 21, 0.84);
+}
+
+.gallery-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.gallery-item {
+  border: 1px solid rgba(52, 45, 41, 0.12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 14px 38px rgba(52, 45, 41, 0.08);
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: transform var(--t-med), box-shadow var(--t-med);
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px rgba(52, 45, 41, 0.12);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-caption {
+  display: block;
+  padding: 10px 12px 12px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.gallery-item[hidden] {
+  display: none;
+}
+
+/* Projects (modern cards with image) */
+
+.projects-modern {
+  max-width: 1100px;
+  margin: 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: transform var(--t-med), box-shadow var(--t-med);
+}
+
+.project:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 65px rgba(52, 45, 41, 0.14);
+}
+
+.project-media img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.project-body {
+  padding: 16px 18px 18px;
+}
+
+.project-body h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  margin: 0 0 8px;
+}
+
+.project-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* Contact */
+
+.contact-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 6px;
+  color: var(--muted-2);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(52, 45, 41, 0.14);
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--ink);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: rgba(215, 166, 166, 0.65);
+  box-shadow: 0 0 0 3px rgba(215, 166, 166, 0.22);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.field.two-col {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.contact-form {
+  padding: 22px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.form-note {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.form-status {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.contact-card {
+  padding: 22px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 14px 45px rgba(52, 45, 41, 0.1);
+  color: var(--muted);
+}
+
+.contact-card h3 {
+  font-family: var(--serif);
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+
+.contact-card a {
+  color: rgba(28, 23, 21, 0.85);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-card .small {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Footer */
+
+.site-footer {
+  border-top: 1px solid rgba(52, 45, 41, 0.12);
+  padding: 22px 6vw 24px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.footer-name {
+  font-family: var(--serif);
+  margin: 0;
+  letter-spacing: 0.06em;
+}
+
+.footer-note {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-link {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 45, 41, 0.12);
+  background: rgba(255, 255, 255, 0.7);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+
+.icon-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(52, 45, 41, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.icon-link svg {
+  width: 20px;
+  height: 20px;
+  fill: rgba(28, 23, 21, 0.72);
+}
+
+.copyright {
+  max-width: 1100px;
+  margin: 14px auto 0;
+  color: var(--muted-2);
+  font-size: 0.85rem;
+}
+
+/* Scroll reveal animations */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lightbox */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+}
+
+.lightbox.is-open {
+  display: block;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 23, 21, 0.42);
+  backdrop-filter: blur(6px);
+}
+
+.lightbox-dialog {
+  position: relative;
+  max-width: min(920px, calc(100vw - 28px));
+  margin: 60px auto 24px;
+  padding: 12px;
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(52, 45, 41, 0.14);
+  box-shadow: 0 30px 80px rgba(52, 45, 41, 0.22);
+}
+
+.lightbox-img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  object-fit: contain;
+  max-height: 70vh;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.lightbox-caption {
+  margin: 10px 6px 2px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 45, 41, 0.12);
+  background: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 840px) {
+  .header-inner {
+    padding-inline: 5vw;
+  }
+
+  .main-nav {
+    position: fixed;
+    inset: 64px 0 auto;
+    padding: 14px 5vw 10px;
+    background: rgba(251, 244, 239, 0.86);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(52, 45, 41, 0.12);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--t-med), opacity var(--t-med);
+  }
+
+  .main-nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .section {
+    padding-inline: 5vw;
+  }
+
+  .about-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .projects-modern {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .field.two-col {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+

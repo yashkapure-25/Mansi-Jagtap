@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mansi Jagtap | Official Portfolio</title>
+    <meta name="description" content="Official portfolio of aspiring model Mansi Jagtap. Fashion, Commercial, and Editorial." />
+    <meta name="theme-color" content="#fbf4ef" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+<link rel="shortcut icon" href="assets/commercial1-mansi.jpg" type="image/x-icon">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      :root {
+        /* Palette: Wholesome, Soft, Luxury */
+        --bg: #fbf4ef;
+        --bg-gradient: linear-gradient(135deg, #fbf4ef 0%, #f7ebe1 100%);
+        --surface: rgba(255, 255, 255, 0.65);
+        --surface-blur: blur(20px);
+        --ink: #1c1715;
+        --muted: #6b5e59;
+        --accent: #d7a6a6; /* Soft Blush */
+        --border: rgba(52, 45, 41, 0.08);
+        
+        /* Spacing & Radius */
+        --radius-lg: 12px;
+        --radius-pill: 100px;
+        --shadow-sm: 0 10px 30px rgba(28, 23, 21, 0.04);
+        --shadow-hover: 0 20px 40px rgba(28, 23, 21, 0.08);
+
+        /* Typography */
+        --font-serif: "Cormorant Garamond", serif;
+        --font-sans: "Manrope", sans-serif;
+        
+        /* Transitions */
+        --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      /* --- Global Reset & Base --- */
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        background: var(--bg-gradient);
+        color: var(--ink);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1, h2, h3, h4 { margin: 0; font-family: var(--font-serif); font-weight: 400; }
+      p { line-height: 1.7; color: var(--muted); margin: 0 0 1rem 0; }
+      img { max-width: 100%; display: block; }
+      a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+      button { border: none; background: none; font-family: inherit; cursor: pointer; }
+
+      /* --- Animations --- */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+      }
+      .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+      /* --- Header --- */
+      .site-header {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 100;
+        padding: 20px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+      }
+      .site-header.scrolled {
+        background: rgba(251, 244, 239, 0.85);
+        backdrop-filter: var(--surface-blur);
+        border-bottom: 1px solid var(--border);
+        padding: 15px 5%;
+      }
+      .logo {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink);
+        z-index: 101;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        position: relative;
+        color: var(--muted);
+      }
+      .nav-links a::after {
+        content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 1px;
+        background: var(--ink); transition: width 0.3s;
+      }
+      .nav-links a:hover { color: var(--ink); }
+      .nav-links a:hover::after { width: 100%; }
+
+      /* Mobile Nav Toggle */
+      .menu-toggle { display: none; z-index: 101; flex-direction: column; gap: 6px; }
+      .menu-toggle span { width: 24px; height: 1px; background: var(--ink); transition: 0.3s; }
+      
+      /* --- Hero Section (Name First) --- */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        transition: transform 1s var(--ease-out);
+      }
+      .hero-title {
+        font-size: clamp(3rem, 8vw, 6rem);
+        letter-spacing: 0.08em;
+        line-height: 1;
+        margin-bottom: 1rem;
+        animation: fadeInSlow 1.5s ease-out;
+      }
+      .hero-subtitle {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        color: var(--muted);
+        animation: fadeInSlow 2s ease-out;
+      }
+      .hero-image-wrapper {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(50px);
+        width: min(400px, 90vw);
+        opacity: 0;
+        transition: opacity 1s ease, transform 1s ease;
+        z-index: 1;
+        pointer-events: none;
+      }
+      .hero-image-wrapper.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .hero-image-wrapper img {
+        width: 100%;
+        border-radius: 200px 200px 0 0; /* Arch shape */
+        box-shadow: 0 -20px 60px rgba(0,0,0,0.1);
+      }
+
+      /* Scroll Cue */
+      .scroll-cue {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+        opacity: 0.7;
+        animation: bounce 2s infinite;
+      }
+
+      /* --- Sections General --- */
+      .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+      .section-header { text-align: center; margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto; }
+      .section-header h2 { font-size: 2.5rem; margin-bottom: 15px; }
+      
+      /* --- About --- */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .about-img {
+        position: relative;
+      }
+      .about-img img {
+        width: 100%;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .chip-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        padding: 8px 16px;
+        background: rgba(255,255,255,0.5);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-pill);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      /* --- Gallery --- */
+      .filters { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+      .filter-btn {
+        padding: 10px 20px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-pill);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        transition: 0.3s;
+      }
+      .filter-btn.active, .filter-btn:hover {
+        background: white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        color: var(--ink);
+        border-color: transparent;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+      }
+      .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        aspect-ratio: 3/4;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .gallery-item:hover img { transform: scale(1.05); }
+      .overlay {
+        position: absolute; inset: 0;
+        background: rgba(0,0,0,0.2);
+        opacity: 0; transition: 0.3s;
+        display: flex; align-items: flex-end; padding: 20px;
+      }
+      .gallery-item:hover .overlay { opacity: 1; }
+      .overlay span { color: white; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+      /* --- Projects --- */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      .project-card {
+        background: white;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.3s;
+        border: 1px solid var(--border);
+      }
+      .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+      .project-img { height: 250px; overflow: hidden; }
+      .project-img img { width: 100%; height: 100%; object-fit: cover; }
+      .project-info { padding: 25px; }
+      .project-info h3 { font-size: 1.4rem; margin-bottom: 10px; }
+
+      /* --- Contact --- */
+      .contact-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        background: white;
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: var(--shadow-sm);
+      }
+      .form-group { margin-bottom: 20px; }
+      .form-group label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; color: var(--muted); }
+      .form-control {
+        width: 100%; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;
+        font-family: var(--font-sans); font-size: 1rem; background: #fafafa;
+      }
+      .form-control:focus { outline: none; border-color: var(--accent); background: white; }
+      .btn-submit {
+        background: var(--ink); color: white; padding: 15px 35px;
+        border-radius: var(--radius-pill); text-transform: uppercase;
+        letter-spacing: 0.15em; font-size: 0.8rem; width: 100%;
+        transition: 0.3s;
+      }
+      .btn-submit:hover { background: #333; transform: translateY(-2px); }
+
+      /* --- Footer --- */
+      footer {
+        padding: 50px 5%;
+        text-align: center;
+        border-top: 1px solid var(--border);
+        background: rgba(255,255,255,0.4);
+      }
+      .footer-socials { display: flex; justify-content: center; gap: 20px; margin: 20px 0; }
+      .disclaimer { font-size: 0.8rem; opacity: 0.6; margin-top: 20px; }
+
+      /* --- Lightbox --- */
+      .lightbox {
+        position: fixed; inset: 0; z-index: 1000;
+        background: rgba(251, 244, 239, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex; justify-content: center; align-items: center;
+        opacity: 0; pointer-events: none; transition: 0.3s;
+      }
+      .lightbox.active { opacity: 1; pointer-events: auto; }
+      .lightbox img { max-height: 85vh; max-width: 90vw; box-shadow: 0 30px 60px rgba(0,0,0,0.15); border-radius: 4px; }
+      .close-lightbox { position: absolute; top: 30px; right: 30px; font-size: 2rem; cursor: pointer; }
+
+      /* --- Mobile --- */
+      @media (max-width: 768px) {
+        .nav-links {
+          position: fixed; top: 0; right: 0; height: 100vh; width: 70%;
+          background: #fff; flex-direction: column; justify-content: center;
+          align-items: center; transform: translateX(100%); transition: 0.3s;
+          box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+        }
+        .nav-links.open { transform: translateX(0); }
+        .menu-toggle { display: flex; }
+        .about-grid, .contact-container { grid-template-columns: 1fr; }
+        .hero-title { font-size: 3.5rem; }
+        .hero-image-wrapper { width: 80vw; }
+      }
+
+      @keyframes fadeInSlow { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);} 40% {transform: translateX(-50%) translateY(-10px);} 60% {transform: translateX(-50%) translateY(-5px);} }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect, useRef } = React;
+
+      // --- Data ---
+      const galleryData = [
+        { id: 1, category: "studio", src: "assets/studio1-mansi.jpg", title: "Minimal Studio" },
+        { id: 2, category: "outdoor", src: "assets/outdoor1-mansi.jpg", title: "Golden Hour" },
+        { id: 3, category: "fashion", src: "assets/fashion1-mansi.jpg", title: "Editorial Look" },
+        { id: 4, category: "commercial", src: "assets/commercial1-mansi.jpg", title: "Brand Campaign" },
+        { id: 5, category: "studio", src: "assets/studio2-mansi.jpg", title: "Clean Headshot" },
+        { id: 6, category: "outdoor", src: "assets/outdoor2-mansi.jpg", title: "Urban Lifestyle" },
+      ];
+
+      const projectsData = [
+        { id: 1, title: "Summer Campaign", desc: "A fresh, youth-oriented campaign for a local boutique brand focusing on modest summer wear.", img: "https://placehold.co/800x600/f0e6e6/333?text=Brand+Collab" },
+        { id: 2, title: "Runway Workshop", desc: "Intensive training completion certificate for runway walking and posing techniques.", img: "https://placehold.co/800x600/e6f0e6/333?text=Training" },
+        { id: 3, title: "Editorial Feature", desc: "Featured in 'New Faces' segment highlighting clean aesthetics and professional demeanor.", img: "https://placehold.co/800x600/e6ebf0/333?text=Magazine" },
+      ];
+
+      // --- Components ---
+
+      const Navigation = () => {
+        const [scrolled, setScrolled] = useState(false);
+        const [menuOpen, setMenuOpen] = useState(false);
+
+        useEffect(() => {
+          const handleScroll = () => setScrolled(window.scrollY > 50);
+          window.addEventListener("scroll", handleScroll);
+          return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+
+        return (
+          <nav className={`site-header ${scrolled ? "scrolled" : ""}`}>
+            <a href="#" className="logo">Mansi Jagtap</a>
+            
+            <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+              <a href="#home" onClick={() => setMenuOpen(false)}>Home</a>
+              <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+              <a href="#photoshoots" onClick={() => setMenuOpen(false)}>Photoshoots</a>
+              <a href="#projects" onClick={() => setMenuOpen(false)}>Projects</a>
+              <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
+            </div>
+
+            <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle Menu">
+              <span style={{ transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }}></span>
+              <span style={{ opacity: menuOpen ? 0 : 1 }}></span>
+              <span style={{ transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }}></span>
+            </button>
+          </nav>
+        );
+      };
+
+      const Hero = () => {
+        const [showPhoto, setShowPhoto] = useState(false);
+
+        useEffect(() => {
+          const handleScroll = () => {
+            if (window.scrollY > 50) setShowPhoto(true);
+            else setShowPhoto(false);
+          };
+          window.addEventListener("scroll", handleScroll);
+          return () => window.removeEventListener("scroll", handleScroll);
+        }, []);
+
+        return (
+          <section id="home" className="hero">
+            <div className="hero-content" style={{ transform: showPhoto ? "translateY(-10vh)" : "translateY(0)" }}>
+              <h1 className="hero-title">Mansi Jagtap</h1>
+              <p className="hero-subtitle">Official Portfolio</p>
+            </div>
+            
+            <div className={`hero-image-wrapper ${showPhoto ? "show" : ""}`}>
+              {/* REPLACE with real hero image */}
+              <img src="assets/commercial1-mansi.jpg" alt="Mansi Jagtap Professional Portrait" />
+            </div>
+
+            <div className="scroll-cue" style={{ opacity: showPhoto ? 0 : 0.7, transition: 'opacity 0.5s' }}>
+              Scroll to Explore
+            </div>
+          </section>
+        );
+      };
+
+      const About = () => {
+        return (
+          <section id="about" className="section">
+            <div className="about-grid">
+              <div className="about-img reveal">
+                 {/* REPLACE with real about image */}
+                <img src="assets/about-mansi.jpg" alt="Mansi Jagtap Profile" />
+              </div>
+              <div className="about-text reveal">
+                <h2>About Mansi</h2>
+                <p>
+                  Mansi Jagtap is a young, aspiring model with a passion for storytelling through imagery. 
+                  Driven by creativity and a love for fashion, she brings a professional, focused, and 
+                  wholesome energy to every set.
+                </p>
+                <p>
+                  With a commitment to learning and growth, Mansi seeks to collaborate with photographers 
+                  and brands that value elegance and authenticity. She approaches modeling as an art form, 
+                  ensuring that every project is executed with poise and dedication.
+                </p>
+                <div className="chip-container">
+                  <span className="chip">Editorial</span>
+                  <span className="chip">Commercial</span>
+                  <span className="chip">Runway</span>
+                  <span className="chip">Fit Modeling</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const Gallery = () => {
+        const [filter, setFilter] = useState("all");
+        const [lightboxImg, setLightboxImg] = useState(null);
+
+        const filtered = filter === "all" ? galleryData : galleryData.filter(item => item.category === filter);
+
+        return (
+          <section id="photoshoots" className="section">
+            <div className="section-header reveal">
+              <h2>Photoshoots</h2>
+              <p>A curated selection of professional work.</p>
+            </div>
+
+            <div className="filters">
+              {['all', 'studio', 'outdoor', 'fashion', 'commercial'].map(cat => (
+                <button 
+                  key={cat} 
+                  className={`filter-btn ${filter === cat ? 'active' : ''}`}
+                  onClick={() => setFilter(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <div className="gallery-grid">
+              {filtered.map(item => (
+                <div key={item.id} className="gallery-item reveal" onClick={() => setLightboxImg(item)}>
+                  <img src={item.src} alt={item.title} loading="lazy" />
+                  <div className="overlay">
+                    <span>{item.title}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className={`lightbox ${lightboxImg ? 'active' : ''}`} onClick={() => setLightboxImg(null)}>
+              {lightboxImg && <img src={lightboxImg.src} alt={lightboxImg.title} />}
+              <div className="close-lightbox">&times;</div>
+            </div>
+          </section>
+        );
+      };
+
+      const Projects = () => {
+        return (
+          <section id="projects" className="section">
+            <div className="section-header reveal">
+              <h2>Projects & Experience</h2>
+              <p>Highlights of recent collaborations and training.</p>
+            </div>
+            <div className="projects-grid">
+              {projectsData.map(p => (
+                <div key={p.id} className="project-card reveal">
+                  <div className="project-img">
+                    <img src={p.img} alt={p.title} loading="lazy" />
+                  </div>
+                  <div className="project-info">
+                    <h3>{p.title}</h3>
+                    <p>{p.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      };
+
+      const Contact = () => {
+        return (
+          <section id="contact" className="section">
+             <div className="section-header reveal">
+              <h2>Get in Touch</h2>
+              <p>For professional inquiries, bookings, and collaborations only.</p>
+            </div>
+            <div className="contact-container reveal">
+              <div className="contact-info">
+                <h3>Contact Details</h3>
+                <p>Available for bookings in Mumbai & Pune.</p>
+                <br/>
+                <p><strong>Email:</strong> <a href="mailto:contact@mansijagtap.com">contact@mansijagtap.com</a></p>
+                <p><strong>Instagram:</strong> <a href="#">@mansi.model</a></p>
+                <br/>
+                <p style={{fontSize: '0.8rem', opacity: 0.7}}>Managed by Guardian/Agency for safety & professionalism.</p>
+              </div>
+              
+              <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group">
+                  <label>Name</label>
+                  <input type="text" className="form-control" required placeholder="Your Name / Agency" />
+                </div>
+                <div className="form-group">
+                  <label>Email</label>
+                  <input type="email" className="form-control" required placeholder="email@example.com" />
+                </div>
+                <div className="form-group">
+                  <label>Subject</label>
+                  <select className="form-control">
+                    <option>Booking Inquiry</option>
+                    <option>Collaboration</option>
+                    <option>General Question</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Message</label>
+                  <textarea className="form-control" rows="4" placeholder="Project details..."></textarea>
+                </div>
+                <button type="submit" className="btn-submit">Send Message</button>
+              </form>
+            </div>
+          </section>
+        );
+      };
+
+      const Footer = () => (
+        <footer>
+          <a href="#" className="logo" style={{ fontSize: '1.2rem' }}>Mansi Jagtap</a>
+          <div className="footer-socials">
+             {/* Icons would go here */}
+             <a href="#">Instagram</a> &bull; <a href="#">Email</a>
+          </div>
+          <p className="disclaimer">
+            &copy; {new Date().getFullYear()} Mansi Jagtap. All rights reserved.<br/>
+            Images are for portfolio use only.
+          </p>
+        </footer>
+      );
+
+      const App = () => {
+        // Intersection Observer for fade-up animations
+        useEffect(() => {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                entry.target.classList.add('fade-up');
+              }
+            });
+          }, { threshold: 0.1 });
+
+          document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }, []);
+
+        return (
+          <>
+            <Navigation />
+            <Hero />
+            <About />
+            <Gallery />
+            <Projects />
+            <Contact />
+            <Footer />
+          </>
+        );
+      };
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
