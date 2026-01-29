@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ================= HEADER SCROLL EFFECT ================= */
+  /* ================= HEADER SCROLL EFFECT ================= */z
   const header = document.querySelector(".site-header");
 
   const handleScroll = () => {
@@ -105,3 +105,29 @@ document.addEventListener("DOMContentLoaded", () => {
     yearSpan.textContent = new Date().getFullYear();
   }
 });
+const Footer = () => (
+  <footer>
+    {/* Image Logo with Centering Fix */}
+    <a href="#" className="logo" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      <img 
+        src="assets/commercial1-mansi.jpg" 
+        alt="Mansi Jagtap Logo" 
+        style={{ 
+          height: '60px', 
+          width: '60px', 
+          objectFit: 'cover', 
+          borderRadius: '50%',       /* Makes it a circle */
+          border: '1px solid #1c1715' /* Adds a thin border definition */
+        }} 
+      />
+    </a>
+
+    <div className="footer-socials">
+      <a href="https://www.instagram.com/_official__mansi_/" target="_blank">Instagram</a> 
+      &bull; 
+      <a href="mailto:contact@mansijagtap.com">Email</a>
+    </div>
+    
+    <p className="disclaimer">&copy; {new Date().getFullYear()} Mansi Jagtap. All rights reserved.</p>
+  </footer>
+);
